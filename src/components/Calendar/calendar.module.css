@@ -1,0 +1,14 @@
+.containerDate{
+    padding: 30px;
+}
+.containerEvent{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+}
+/* Estilo para ajustar la altura de las filas de cada hora */
+.fc-time-grid-slot {
+    height: 50px; /* Ajusta el valor para personalizar la altura de las filas */
+  }
