@@ -13,6 +13,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Calendar />} />
+        <Route path="/futbol" element={<Calendar />} />
         <Route
           path="/ventas"
           element={
@@ -22,7 +23,7 @@ function App() {
           }
         />
         <Route
-          path="*"
+          path="/"
           element={
             <Navigate to="/login" replace>
               <Ventas />

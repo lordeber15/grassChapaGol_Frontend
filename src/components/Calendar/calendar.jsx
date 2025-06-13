@@ -18,6 +18,7 @@ import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { DemoItem } from "@mui/x-date-pickers/internals/demo";
 import dayjs from "dayjs";
 import { StaticTimePicker } from "@mui/x-date-pickers/StaticTimePicker";
+import { Link } from "react-router";
 import {
   useReservas,
   useCrearReservas,
@@ -160,6 +161,14 @@ export default function Calendar() {
 
   return (
     <div className={style.containerDate}>
+      <div className={style.containerdeporte}>
+        <Link to="/" className={style.deporte}>
+          Voley
+        </Link>
+        <Link to="/futbol" className={style.deporte}>
+          Futbol
+        </Link>
+      </div>
       <FullCalendar
         ref={calendarRef}
         locale={esLocale}

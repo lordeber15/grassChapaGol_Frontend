@@ -1,7 +1,7 @@
 import { TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import style from "./login.module.css";
-import logohacienda from "../../assets/hacienda.png";
+import logohacienda from "../../assets/logo.png";
 import { useNavigate } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import { getLogin } from "../../request/login";

@@ -1,4 +1,4 @@
-import logo from "../../assets/hacienda.png";
+import logo from "../../assets/logo.png";
 import style from "./navBar.module.css";
 import { Link } from "react-router";
 import Avatar from "@mui/material/Avatar";
@@ -30,7 +30,7 @@ export default function NavBar() {
     <div className={style.container}>
       <div className={style.containerLogo}>
         <img src={logo} className={style.logo} />
-        <p className={style.title}>Grass Hacienda</p>
+        <p className={style.title}>Chapa Gool</p>
       </div>
       {admin == false ? (
         <div className={style.links}>
