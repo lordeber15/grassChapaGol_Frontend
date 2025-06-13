@@ -1,9 +1,8 @@
 import axios from "axios";
 
 const loginApi = axios.create({
-  baseURL:
-    //"https://grass-hacienda-grass-hacienda-sq1c0u-0533db-31-97-28-201.traefik.me/",
-    "http://localhost:3000",
+  baseURL: "https://chapagol-chapagol-5npmwv-32bfef-31-97-28-201.traefik.me/",
+  //  "http://localhost:3000",
 });
 export const getLogin = async () => {
   const res = await loginApi.get("/login");
