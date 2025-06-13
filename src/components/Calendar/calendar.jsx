@@ -25,6 +25,14 @@ import {
   useActualizarReserva,
   useEliminarReserva,
 } from "../hooks/hookreservas";
+import {
+  useFutbol,
+  useCrearFutbol,
+  useActualizarFutbol,
+  useEliminarFutbol,
+} from "../hooks/hookfutbol";
+
+import { useLocation } from "react-router";
 
 export default function Calendar() {
   const calendarRef = useRef(null);
@@ -36,15 +44,24 @@ export default function Calendar() {
   const [dialogEliminarAbierto, setDialogEliminarAbierto] = useState(false);
   const [deporte, setDeporte] = useState("Vóley");
   const [userData, setUserData] = useState(null);
-
+  const location = useLocation();
+  const path = location.pathname;
+  const deporteRuta = path.includes("futbol") ? "Fútbol" : "Vóley";
   const now = new Date();
   const validRange = {
     start: now.toISOString(), // Fecha actual en formato ISO string
   };
-  const { data: reservas = [] } = useReservas();
+  const { data: reservasVoley = [] } = useReservas();
   const { mutate: crearReserva } = useCrearReservas();
   const { mutate: actualizarReserva } = useActualizarReserva();
   const { mutate: eliminarReserva } = useEliminarReserva();
+
+  const { data: reservasFutbol = [] } = useFutbol();
+  const { mutate: crearFutbol } = useCrearFutbol();
+  const { mutate: actualizarFutbol } = useActualizarFutbol();
+  const { mutate: eliminarFutbol } = useEliminarFutbol();
+
+  const reservas = deporteRuta === "Fútbol" ? reservasFutbol : reservasVoley;
 
   const getInitialView = () => {
     return window.matchMedia("(max-width: 767px)").matches
@@ -121,22 +138,36 @@ export default function Calendar() {
     if (modoEdicion) {
       eventoEditando.setStart(fechaHoraInicio);
       eventoEditando.setEnd(fechaHoraFin);
-      eventoEditando.setProp("title", deporte);
-      // Aquí puedes usar el hook para actualizar en base de datos
-      actualizarReserva({
-        id: eventoEditando.id,
-        datos: {
-          start: fechaHoraInicio,
-          end: fechaHoraFin,
-          title: deporte,
-          backgroundColor: "#0E6655",
-          borderColor: "#0E6655",
-          textColor: "#F2F3F4",
-        },
-      });
+      eventoEditando.setProp("title", deporteRuta);
+
+      if (deporteRuta === "Fútbol") {
+        actualizarFutbol({
+          id: eventoEditando.id,
+          datos: {
+            start: fechaHoraInicio,
+            end: fechaHoraFin,
+            title: deporteRuta,
+            backgroundColor: "#0E6655",
+            borderColor: "#0E6655",
+            textColor: "#F2F3F4",
+          },
+        });
+      } else {
+        actualizarReserva({
+          id: eventoEditando.id,
+          datos: {
+            start: fechaHoraInicio,
+            end: fechaHoraFin,
+            title: deporteRuta,
+            backgroundColor: "#0E6655",
+            borderColor: "#0E6655",
+            textColor: "#F2F3F4",
+          },
+        });
+      }
     } else {
       const nuevoEvento = {
-        title: deporte,
+        title: deporteRuta,
         start: fechaHoraInicio,
         end: fechaHoraFin,
         backgroundColor: "#0E6655",
@@ -144,7 +175,11 @@ export default function Calendar() {
         textColor: "#F2F3F4",
       };
 
-      crearReserva(nuevoEvento);
+      if (deporteRuta === "Fútbol") {
+        crearFutbol(nuevoEvento);
+      } else {
+        crearReserva(nuevoEvento);
+      }
     }
 
     handleClose();
@@ -152,8 +187,12 @@ export default function Calendar() {
 
   const handleEliminarReserva = () => {
     if (eventoEditando) {
-      eventoEditando.remove(); // quita del calendario
-      eliminarReserva(eventoEditando.id); // elimina de la base de datos
+      eventoEditando.remove();
+      if (deporteRuta === "Fútbol") {
+        eliminarFutbol(eventoEditando.id);
+      } else {
+        eliminarReserva(eventoEditando.id);
+      }
       handleClose();
       setDialogEliminarAbierto(false);
     }
@@ -216,8 +255,8 @@ export default function Calendar() {
             <TextField
               select
               label="Tipo de Reserva"
-              value={deporte}
-              onChange={(e) => setDeporte(e.target.value)}
+              value={deporteRuta}
+              disabled
               sx={{ width: "95%", marginTop: 2 }}
               SelectProps={{
                 native: true,

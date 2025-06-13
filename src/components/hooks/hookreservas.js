@@ -1,12 +1,16 @@
-import { getReservas, createReservas, updateReservas, deleteReservas } from "../../request/reservas";
+import {
+  getReservas,
+  createReservas,
+  updateReservas,
+  deleteReservas,
+} from "../../request/reservas";
 import { useQuery } from "@tanstack/react-query";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-
 
 export const useReservas = () => {
   return useQuery({
     queryKey: ["reservas"],
-    queryFn: getReservas
+    queryFn: getReservas,
   });
 };
 
