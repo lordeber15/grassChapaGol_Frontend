@@ -17,7 +17,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { DemoItem } from "@mui/x-date-pickers/internals/demo";
 import dayjs from "dayjs";
-import { StaticTimePicker } from "@mui/x-date-pickers/StaticTimePicker";
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import { Link } from "react-router";
 import {
   useReservas,
@@ -277,7 +277,7 @@ export default function Calendar() {
                 />
               </DemoItem>
               <DemoItem label="Hora de la Resera">
-                <StaticTimePicker
+                <TimePicker
                   value={value}
                   onChange={(newValue) => setValue(newValue)}
                 />
